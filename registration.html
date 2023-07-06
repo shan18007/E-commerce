@@ -1,64 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Registration</title>
+    <head>
+        <title>Registration</title>
 
-    <link rel="stylesheet" href="registration.css">
-    <script>
-       function myFunction(){
-        var password = document.getElementById("psw").value
-        var cPassword = document.getElementById("repeat").value
+        <link rel="stylesheet" href="registration.css">
+        <script>
+            var db;
 
-        if(password==cPassword){
-            document.getElementById("repeat").style.borderColor="green";
-            document.getElementById("sample").innerHTML="Password matched";
-        }
-        else{
-            document.getElementById("sample").innerHTML="Password does not match";
-            document.getElementById("sbtbtn").disabled=true
-        }
-       }
-    </script>
-</head>
-<body>
-    <form >
-  <div class="container">
-    <h1>Register</h1>
-    <p>Please fill in this form to create an account.</p>
-    <hr>
+            function createDatabase() {
+                db = openDatabase("ecomdb", "1.0", "THis is just a simple database", 2 * 1024 * 1024)
+                // alert("Database is created successfully...")
+            }
 
-    <label for="name"><b>Name</b></label>
-    <input type="text" name="name" id="name" placeholder="Enter Name" required>
+            createDatabase();
 
-    <label for="name"><b>User Name</b></label>
-    <input type="text" name="userName" id="userName" placeholder="Enter User Name" required>
+            function createTable() {
+                db.transaction(function (tx) {
+                    tx.executeSql("CREATE TABLE IF NOT EXISTS users(id unique,name,uname,email,contactNumber,password)")
+                    alert("Table is created successfully")
+                })
 
-    <label for="email"><b>Email</b></label>
-    <input type="email" placeholder="Enter Email" name="email" id="email" required>
+            }
 
-    <label for="phoneNo"><b>Mobile No</b></label>
-    <input type="text" placeholder="Enter Mobile No" name="moblieNo" id="moblieNo" required>
+            function matchPasswords() {
+                var password = document.getElementById("pwd").value
+                var cPassword = document.getElementById("repeatPwd").value
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-     
-    <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" id="repeat" required onkeyup="myFunction()" required> 
-    <hr>
+                if (password == cPassword) {
+                    document.getElementById("repeatPwd").style.borderColor = "green";
+                    document.getElementById("sample").innerHTML = "Password matched";
+                } else {
+                    document.getElementById("sample").innerHTML = "Password does not match";
+                    // document.getElementById("sbtbtn").disabled = true
+                }
+            }
 
-    <h6 id="sample"></h6>
+            function registerUser() {
+              alert("Register");
+                var name = document.getElementById('name').value
+                var uname = document.getElementById('userName').value
+                var email = document.getElementById('email').value
+                var contactNumber = document.getElementById('mobileNo').value
+                var password = document.getElementById('pwd').value
+                var rePwd = document.getElementById('repeatPwd').value
 
-    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-    <button type="submit" class="registerbtn" id="sbtbtn">Register</button>
-    
-    <button type="reset" value="submit" class="resetbtn"> Reset the Form </button>  
-  </div>
+                var id = 0;
 
-  <div class="container signin">
-    <p>Already have an account? <a href="#">Sign in</a>.</p>
-  </div>
-</form>
+                if (name == "" || uname == "" || email == "" || contactNumber == "" || password == "" || rePwd == "") {
+                    alert("all fields are required  ");
+                    return;
+                }
 
-    
-</body>
+
+                db.transaction(function (tx) {
+                    tx.executeSql("select * from users", [], function (tx, result) {
+                        var len = result.rows.length;
+                        console.log("lenghth: " + len);
+
+                        console.log("INSERT INTO users(id,name,uname,email,contactNumber,password) VALUES (" + (
+                            len + 1
+                        ) + ",'" + name + "','" + uname + "','" + email + "' , " + contactNumber + ", '" + password + "')");
+                        tx.executeSql("INSERT INTO users(id,name,uname,email,contactNumber,password) VALUES (" + (
+                            len + 1
+                        ) + ",'" + name + "','" + uname + "','" + email + "' , " + contactNumber + ", '" + password + "')");
+                        alert("Data is inserted successfully")
+                    })
+                })
+            }
+
+            function loginUser() {
+                var uname = document.getElementById('unm').value
+                var password = document.getElementById('pwd').value
+
+                console.log("unm: " + uname);
+                console.log("unm: " + password);
+
+                db.transaction(function (tx) {
+                    tx.executeSql("select * from users", [], function (tx, result) {
+                        var len = result.rows.length
+                        var isValidUser = false;
+                        console.log("query fired.. len: " + len);
+                        if (len == 0) {
+                            alert("No users found")
+                        } else {
+                            for (i = 0; i < len; i ++) {
+                                console.log("unm db : " + result.rows.item(i).uname);
+                                console.log("pwd db : " + result.rows.item(i).password);
+
+                                if (result.rows.item(i).uname === uname && result.rows.item(i).password === password) {
+                                    alert("unm pwd mathces");
+                                    isValidUser = true;
+                                    return;
+                                }
+                            }
+                        }
+                        if (! isValidUser) {
+                            alert("Invalid Credentials..");
+                        }
+                    })
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <form>
+            <div class="container">
+
+                <button onclick="createDatabase()">Create Database</button>
+                <button onclick="createTable()">Create Table</button>
+                <br>
+                <h1>Register</h1>
+                <p>Please fill in this form to create an account.</p>
+                <hr>
+
+                <label for="name">
+                    <b>Name</b>
+                </label>
+                <input type="text" name="name" id="name" placeholder="Enter Name" required>
+
+                <label for="name">
+                    <b>User Name</b>
+                </label>
+                <input type="text" name="userName" id="userName" placeholder="Enter User Name" required>
+
+                <label for="email">
+                    <b>Email</b>
+                </label>
+                <input type="email" placeholder="Enter Email" name="email" id="email" required>
+
+                <label for="phoneNo">
+                    <b>Mobile No</b>
+                </label>
+                <input type="text" placeholder="Enter Mobile No" name="mobileNo" id="mobileNo" required>
+
+                <label for="psw">
+                    <b>Password</b>
+                </label>
+                <input type="password" placeholder="Enter Password" name="pwd" id="pwd" required>
+
+                <label for="psw-repeat">
+                    <b>Repeat Password</b>
+                </label>
+                <input type="password" placeholder="Repeat Password" name="repeatPwd" id="repeatPwd" required onkeyup="matchPasswords()" required>
+                <hr>
+
+                <h6 id="sample"></h6>
+
+                <p>By creating an account you agree to our
+                    <a href="#">Terms & Privacy</a>.</p>
+                <button type="submit" class="registerbtn" id="sbtbtn" onclick="registerUser()">Register</button>
+                <button type="reset" value="submit" class="resetbtn">
+                    Reset the Form
+                </button>
+            </div>
+
+            <div class="container signin">
+                <p>Already have an account?
+                    <a href="#">Sign in</a>.</p>
+            </div>
+        </form>
+
+
+    </body>
 </html>
