@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Market</title>
+  
+    <style>
+        .fruit{
+            display: grid;
+            grid-row-gap: 1px;
+            grid-column-gap: 1px;
+            grid-template-columns: auto auto auto;
+        }
+        form{
+            text-align: right;
+        }
+    </style>
+   
+    <script>
+        function calculateTotal() {
+            var total = 0;
+            var discount = 0;
+
+            // Get the selected products and quantities
+            var product1Quantity = parseInt(document.getElementById("product1Quantity").value);
+            var product2Quantity = parseInt(document.getElementById("product2Quantity").value);
+            var product3Quantity = parseInt(document.getElementById("product3Quantity").value);
+
+            // Calculate the total price
+            total += product1Quantity * 150; // Product 1 price is 500
+            total += product2Quantity * 300; // Product 2 price is 800
+            total += product3Quantity * 200; // Product 3 price is 1200
+
+            // Apply discount if total is above 1000
+            if (total > 1000) {
+                discount = total * 0.1; // 10% discount
+                total -= discount;
+            }
+
+            // Display the total price and discount
+            document.getElementById("total").innerHTML = "Total Price: " + total.toFixed(2);
+            document.getElementById("discount").innerHTML = "Discount on price: " + discount.toFixed(2);
+        }
+    </script>
+    
+</head>
+<body>
+    <form action="Login.html">
+        <button>Sing Out </button></form>
+    <h1> Welcome To Fruit Market</h1>
+
+    
+
+    <h2>Fruit:</h2>
+    
+    <dev class="fruit">
+        <dev class="bannana">
+
+            <p>
+                <img src="src/images/images.jpg" width="250px" height="250px" alt="">
+                <p> Bannana - Price: ₹150 per dozen </p>
+                Please select Quantity <input type="number" id="product1Quantity" value="0" min="0">
+            </p>
+        </dev> 
+        <dev class="apple">
+
+            <p>
+                <img src="src/images/apple.jpg" width="250px" height="250px" alt="">
+                <p> Apple - Price: ₹300 per KG </p>
+                Please select Quantity<input type="number" id="product2Quantity" value="0" min="0">
+            </p>
+        </dev>
+        <dev class="mago">
+
+            <p>
+                <img src="src/images/mago.jpg" width="250px" height="250px" alt="">
+                <p> Mango - Price: ₹200 per KG </p>
+                Please select Quantity<input type="number" id="product3Quantity" value="0" min="0">
+            </p>
+        </dev>
+        
+    </dev>
+    <button onclick="calculateTotal()">Calculate Total</button>
+
+    <h2>Result:</h2>
+    <p id="total"></p>
+    <p id="discount"></p>
+</body>
+</html>
