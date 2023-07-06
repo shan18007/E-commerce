@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="src/css/login.css">
+    <script src="src/js/login.js"></script>
+</head>
+
+<body>
+
+
+
+    <dev>
+
+        <form class="login"  >
+
+            <H3>Login </H3>
+
+            <p>User Name <br>
+                <Input title="Please Enter User Name" type="Text" id="userId" placeholder="Enter User Name" required></Input>
+            </p>
+            <p> Password <br>
+                <Input title="Please Enter Password" type="password" id="userPass" placeholder="Enter password"
+                    required></Input>
+            </p>
+
+            <div class="subcontainer">
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+                <p class="forgotpsd"> <a href="#">Forgot Password?</a></p>
+            </div>
+
+
+            <p>
+                <input id="button" type="button" value="Sign In" onclick="loginUser()">
+            </p>
+            
+
+            <p class="register">Not a member? <a href="http://127.0.0.1:5500/registration.html">Register here!</a></p>
+
+        </form>
+    </dev>
+</body>
+
+</html>

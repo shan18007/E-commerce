@@ -1,0 +1,42 @@
+body {
+    margin: 50px;
+    padding: 0;
+    background-color: rgb(73, 209, 233);
+}
+
+#button{
+    background-color: brown;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 5px;
+    margin: 7px 0;
+    width: 100%;
+    font-size: 18px;
+    
+}
+
+.login {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    width: 400px;
+    height: 500px;
+    border: 5px solid black;
+    border-radius: 30px 30px 30px 30px;
+    background-color: rgb(160, 189, 215);
+}
+
+input[type=text],
+input[type=password] {
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 5px;
+    padding: 15px 18px;
+    box-sizing: border-box;
+}
+
+
+button:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
