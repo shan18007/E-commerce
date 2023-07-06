@@ -16,21 +16,7 @@
 
             }
 
-            function matchPasswords() {
-                var password = document.getElementById("pwd").value
-                var cPassword = document.getElementById("repeatPwd").value
-
-                if (password == cPassword) {
-                    document.getElementById("repeatPwd").style.borderColor = "green";
-                    document.getElementById("sample").innerHTML = "Password matched";
-                } else {
-                    document.getElementById("sample").innerHTML = "Password does not match";
-                    // document.getElementById("sbtbtn").disabled = true
-                }
-            }
-
             function registerUser() {
-              alert("Register");
                 var name = document.getElementById('name').value
                 var uname = document.getElementById('userName').value
                 var email = document.getElementById('email').value
@@ -41,7 +27,7 @@
                 var id = 0;
 
                 if (name == "" || uname == "" || email == "" || contactNumber == "" || password == "" || rePwd == "") {
-                    alert("all fields are required  ");
+                    alert("Please fill all fields...");
                     return;
                 }
 
@@ -62,36 +48,25 @@
                 })
             }
 
-            function loginUser() {
-                var uname = document.getElementById('unm').value
-                var password = document.getElementById('pwd').value
+            function verifyPassword() {
+                var password = document.getElementById("pwd").value;
+                var cPassword = document.getElementById("repeatPwd").value;
+        
+                if (password == cPassword) {
+                  document.getElementById("repeatPwd").style.borderStyle = "solid";
+                  document.getElementById("repeatPwd").style.borderColor = "green";
+                  document.getElementById("passwordMessage").innerHTML =
+                    "Password matched";
+                  document.getElementById("sbtbtn").disabled = false;
+                } else {
+                  document.getElementById("repeatPwd").style.borderStyle = "solid";
+                  document.getElementById("repeatPwd").style.borderColor = "red";
+                  document.getElementById("passwordMessage").innerHTML =
+                    "Password does not match";
+                  document.getElementById("sbtbtn").disabled = true;
+                }
+              }
 
-                console.log("unm: " + uname);
-                console.log("unm: " + password);
-
-                db.transaction(function (tx) {
-                    tx.executeSql("select * from users", [], function (tx, result) {
-                        var len = result.rows.length
-                        var isValidUser = false;
-                        console.log("query fired.. len: " + len);
-                        if (len == 0) {
-                            alert("No users found")
-                        } else {
-                            for (i = 0; i < len; i ++) {
-                                console.log("unm db : " + result.rows.item(i).uname);
-                                console.log("pwd db : " + result.rows.item(i).password);
-
-                                if (result.rows.item(i).uname === uname && result.rows.item(i).password === password) {
-                                    alert("unm pwd mathces");
-                                    isValidUser = true;
-                                    return;
-                                }
-                            }
-                        }
-                        if (! isValidUser) {
-                            alert("Invalid Credentials..");
-                        }
-                    })
-                })
-            }
+            
+            
       

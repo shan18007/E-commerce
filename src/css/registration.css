@@ -65,8 +65,6 @@ a {
   text-align: center;
 }
 
-#repeatPwd{
-    border-style: solid;
-    border-color: red;
-
+:disabled{
+  background: #dddddd;
 }
