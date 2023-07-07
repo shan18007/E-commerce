@@ -6,17 +6,19 @@
                 // alert("Database is created successfully...")
             }
 
-            createDatabase();
-
             function createTable() {
                 db.transaction(function (tx) {
                     tx.executeSql("CREATE TABLE IF NOT EXISTS users(id unique,name,uname,email,contactNumber,password)")
-                    alert("Table is created successfully")
+                    // alert("Table is created successfully")
                 })
 
             }
 
             function registerUser() {
+
+              createDatabase();
+              createTable();
+
                 var name = document.getElementById('name').value
                 var uname = document.getElementById('userName').value
                 var email = document.getElementById('email').value
@@ -25,12 +27,6 @@
                 var rePwd = document.getElementById('repeatPwd').value
 
                 var id = 0;
-
-                if (name == "" || uname == "" || email == "" || contactNumber == "" || password == "" || rePwd == "") {
-                    alert("Please fill all fields...");
-                    return;
-                }
-
 
                 db.transaction(function (tx) {
                     tx.executeSql("select * from users", [], function (tx, result) {
@@ -43,7 +39,8 @@
                         tx.executeSql("INSERT INTO users(id,name,uname,email,contactNumber,password) VALUES (" + (
                             len + 1
                         ) + ",'" + name + "','" + uname + "','" + email + "' , " + contactNumber + ", '" + password + "')");
-                        alert("Data is inserted successfully")
+                        alert("Data is inserted successfully");
+                        location.replace("http://127.0.0.1:5500/Login.html");
                     })
                 })
             }
