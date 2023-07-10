@@ -100,7 +100,7 @@ var db;
                           
                         }
                         if (! isValidUser) {
-                            alert("Invalid user Name, Email or password..");
+                            alert("Invalid user Name or Email");
                         }
                         
                     })
