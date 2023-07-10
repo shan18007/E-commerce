@@ -40,7 +40,7 @@
                             len + 1
                         ) + ",'" + name + "','" + uname + "','" + email + "' , " + contactNumber + ", '" + password + "')");
                         alert("Data is inserted successfully");
-                        location.replace("http://127.0.0.1:5500/Login.html");
+                        location.replace("http://127.0.0.1:5500/E-commerce/Login.html");
                     })
                 })
             }
