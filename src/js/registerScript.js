@@ -3,13 +3,13 @@
 
             function createDatabase() {
                 db = openDatabase("ecomdb", "1.0", "THis is just a simple database", 2 * 1024 * 1024)
-                // alert("Database is created successfully...")
+                //alert("Database is created successfully...")
             }
 
             function createTable() {
                 db.transaction(function (tx) {
                     tx.executeSql("CREATE TABLE IF NOT EXISTS users(id unique,name,uname,email,contactNumber,password)")
-                    // alert("Table is created successfully")
+                    //alert("Table is created successfully")
                 })
 
             }
